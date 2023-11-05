@@ -1,0 +1,31 @@
+Account table
+Account table은 bank account에 대한 여러가지 정보를 저장하는 table이다.
+Account 라는 table이 이미 있다면 없애고, 새로운 Account table를 만든다.
+각 item 마다 저장되는 data 는 4개 (int, character string with max length 3, text (아주 긴 max length), int) 있다.
+accNumber field는 primary key여서 unique 하고 not null 이여야한다.
+branchNumber field는 Branch라는 table를 reference하는 foreign key 여서 그 두 table사이의 link를 부수는 행동을 막는다.
+LOCK TABLES 'Account' WRITE 는 Account table를 수정하는동안 다른 곳에서 이 table을 바꿀수 없게 한다.
+Account table에 새로운 value들을 넣기 전에 table사이의 관계를 걱정하지 않아도 되게 foreign key constraints를 disable 한다.
+그 이후에는 298개의 values를 table에 insert 한다.
+insert 가 끝난 이후에는 foreign keys를 다시 enable 한다. table을 바꾸는것이 끝났으니 Account table을 다시 unlock 한다.
+
+Branch table
+Branch table은 은행 branch들의 number, 이름, 매니저, 그리고 budget을 저장한다.
+Account table과 비슷하게 Branch 라는 table이 이미 있다면 없애고, 새로운 Branch table를 만든다.
+data format은 순서대로 int, max length 20 인 character string, int, 그리고 text이다.
+primary key는 branchNumber이라는 field이고, managerSIN field는 Employee table에 있는 records를 reference하는 foreign key이다.
+Branch table을 수정하기 전에 다른곳에서 바꿀수 없게 lock을 하고, foreign key constraints를 disable 한 후 5개의 value들을 넣는다. 수정이 끝난 후에는 foreign keys를 다시 enable 하고 lock을 푼다.
+
+Customer table
+Customer table은 은행 고객님들의 id, 이름, income, 그리고 생일을 저장한다.
+Customer table은 5개의 data fields가 있다. 그중 두개는 int이고, 세개는 max length 20인 char string이다. customerID field가 primary key의 역할을 한다. foreign key는 없다.
+Customer table에는 많은 고객들의 정보가 넣어져있다.
+
+Employee table
+Employee table은 은행의 employee들의 SIN, 이름, 월급, 그리고 일하는 branch 를 저장한다. branchNumber field는 Branch table에 있는 branchNumber field를 통해 branch 정보를 access할수 있는 foreign key이다.
+
+Owns table
+Owns table은 어떤 고객이 어떤 account 를 가지고 있는지 저장한다. field는 customerID 와 accNumber 두개인데, primary key는 이 두개를 다 사용하는 tuple이다. 이유는 아마도 한명의 고객이 여러개의 account를 가질수 있기 때문인것같다. customerID 는 Customer table에 있는 고객 정보를 access할수 있는 foreign key이고, accNumber은 Account table에 있는 account정보를 access할수 있는 foreign key 이다.
+
+Transactions table
+Transactions table은 은행의 모든 account 들의 transactions를 보관하는 곳이다. accNumber은 Account table에 저장된 정보를 access할수 있는 foreign key이고, transNumber은 각 account마다 1부터 시작해서 transaction번호를 저장하고, amount는 balance가 얼마나 바뀌었는지 저장한다. primary key는 accNumber 과 transNumber 을 둘다 사용한다.

@@ -1,0 +1,21 @@
+{
+  "name": "prisma-practice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src",
+    "build": "node src",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "prisma": "^5.5.2"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.5.2",
+    "express": "^4.18.2"
+  }
+}
