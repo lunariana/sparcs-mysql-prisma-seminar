@@ -5,8 +5,11 @@ const port = process.env.PORT || 3000;
 const problemsRouter = require("./routes/problems");
 app.use("/problems", problemsRouter);
 
-const { PrismaClient } = require("@prisma/client");
-const prisma = new PrismaClient();
+const employeeRouter = require("./routes/employee");
+app.use("/employee", employeeRouter);
+
+const accountRouter = require("./routes/account");
+app.use("/account", accountRouter);
  
 app.get("/", (req, res) => {
   	res.json({ message: "alive" });
@@ -15,25 +18,6 @@ app.get("/", (req, res) => {
 app.listen(port, () => {
 	console.log(`Listening to requests on port ${port}`);
 });
-
-
-// app.get("/quotes", async (req, res) => {    ///////// replace with your stuff
-//   const currentPage = req.query.page || 1;
-//   const listPerPage = 5;
-//   const offset = (currentPage - 1) * listPerPage;
- 
-//   const allQuotes = await prisma.quote.findMany({
-//     include: { author: true },
-//     skip: offset,
-//     take: listPerPage,
-//   });
- 
-//   res.json({
-//     data: allQuotes,
-//     meta: { page: currentPage },
-//   });
-// });
-
 
 // const bcrypt = require('bcryptjs')
 // const jwt = require('jsonwebtoken')
