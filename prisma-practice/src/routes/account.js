@@ -104,14 +104,15 @@ router.post("/:accountNo/withdraw", async (req, res) => {
     });
     currentBalance = Number(currentBalance.balance);
 
-    // deposit money
-    newBalance = currentBalance - withdrawalAmount;
     // check if there is enough money to withdraw
+    newBalance = currentBalance - withdrawalAmount;
     if (newBalance < 0) {
         const error = new Error("insufficient funds");
         error.statusCode = 400;
         throw error;
     }
+    
+    // withdraw money
     newBalance = newBalance.toString();
     const balanceAfterWithdrawal = await prisma.account.update({
         select: {
